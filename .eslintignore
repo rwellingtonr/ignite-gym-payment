@@ -1,0 +1,12 @@
+dist
+build
+public
+node_modules
+*.js
+*.json
+.git
+.vscode
+*.spec.ts
+*.test.ts
+.github
+prisma
