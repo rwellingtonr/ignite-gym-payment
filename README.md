@@ -28,3 +28,7 @@
 - [x] Os dados precisam estar persistidos em um banco PostgreSQL;
 - [ ] Todas listas de dados precisam estar paginadas com 20 itens por página;
 - [ ] O usuário deve ser identificado por um JWT.
+
+## ERD
+
+<img src='./prisma/ERD.svg' alt='Diagrama do banco de dados' />
