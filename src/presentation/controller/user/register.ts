@@ -1,6 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { createUserService } from "~/useCases/user/createUser"
 import { z } from "zod"
+import { handleError } from "~/helpers/errors/handleError"
+import { UserRepository } from "~/infra/repository/user/userRepository"
+import { CreateUserService } from "~/useCases/user/createUser"
 
 export const handleRegister = async (request: FastifyRequest, reply: FastifyReply) => {
 	try {
@@ -11,11 +13,13 @@ export const handleRegister = async (request: FastifyRequest, reply: FastifyRepl
 		})
 		const { email, name, password } = await userSchema.parseAsync(request.body)
 
-		const result = await createUserService({ email, password, name })
+		const repository = new UserRepository()
+
+		const service = new CreateUserService(repository)
+		const result = await service.execute({ email, name, password })
 
 		return reply.status(201).send({ result })
 	} catch (error) {
-		console.log(error)
-		return reply.status(400).send({ error })
+		return handleError(error, reply)
 	}
 }
