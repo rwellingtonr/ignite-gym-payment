@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
-import { handleError } from "~/helpers/errors/handleError"
+import { handleError } from "~/helpers/errors"
 import { UserRepository } from "~/infra/repository/user/userRepository"
 import { CreateUserService } from "~/useCases/user/createUser"
 
