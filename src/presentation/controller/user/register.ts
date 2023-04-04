@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
-import { handleError } from "~/helpers/errors"
+import { handleControllerError } from "~/helpers/errors"
 import { UserRepository } from "~/infra/repository/user/userRepository"
 import { CreateUserService } from "~/useCases/user/createUser"
 
@@ -20,6 +20,6 @@ export const handleRegister = async (request: FastifyRequest, reply: FastifyRepl
 
 		return reply.status(201).send({ result })
 	} catch (error) {
-		return handleError(error, reply)
+		return handleControllerError(error, reply)
 	}
 }
