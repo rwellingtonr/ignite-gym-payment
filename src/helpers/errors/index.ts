@@ -1,2 +1,2 @@
 export { makeError } from "./errorFactory"
-export { handleError } from "./handleError"
+export { handleControllerError } from "./handleControllerError"

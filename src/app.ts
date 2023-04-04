@@ -1,5 +1,6 @@
 import fastify from "fastify"
 import { apiRoutes } from "./presentation/routes"
+import { handleError } from "./helpers/errors/errorHandler"
 
 export const app = fastify({
 	logger: {
@@ -27,3 +28,5 @@ export const app = fastify({
 })
 
 app.register(apiRoutes)
+
+app.setErrorHandler(handleError)

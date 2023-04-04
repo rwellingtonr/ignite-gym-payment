@@ -9,7 +9,8 @@ export class CreateUserService {
 	async execute({ email, name, password }: UserEntity) {
 		const alreadyExists = await this.userRepository.findByEmail(email)
 		if (alreadyExists) {
-			return makeError("409", "This user already exists!")
+			const Error409 = makeError("409", "This user already exists!")
+			throw new Error409()
 		}
 
 		const passwordHash = await hashPassword(password)
@@ -21,6 +22,7 @@ export class CreateUserService {
 		}
 
 		const userCreated = await this.userRepository.create(createUser)
-		return userCreated
+
+		return { user: userCreated }
 	}
 }
