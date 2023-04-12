@@ -7,4 +7,5 @@ export type UserRepositoryData = User
 export interface IUserRepository {
 	create(data: CreateUserInput): Promise<UserEntity>
 	findByEmail(email: string): Promise<UserEntity>
+	findById(id: string): Promise<UserEntity>
 }

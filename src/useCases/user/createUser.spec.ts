@@ -1,14 +1,13 @@
-import { beforeAll, describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it } from "vitest"
 import { CreateUserService } from "./createUser"
 import { comparePassword } from "~/helpers/bcryptjs"
 import { faker } from "@faker-js/faker"
 import { UserInMemoryRepository } from "~/infra/repository/in-memory/userRepositoryInMemory"
-import { makeError } from "~/helpers/errors"
 
 describe("Create User", () => {
 	let createUserService: CreateUserService
 
-	beforeAll(() => {
+	beforeEach(() => {
 		createUserService = new CreateUserService(new UserInMemoryRepository())
 	})
 
@@ -45,6 +44,8 @@ describe("Create User", () => {
 
 		await createUserService.execute(input)
 
-		await expect(() => createUserService.execute(input)).rejects.toThrowError()
+		await expect(() => createUserService.execute(input)).rejects.toThrowError(
+			/This user already exists!/,
+		)
 	})
 })

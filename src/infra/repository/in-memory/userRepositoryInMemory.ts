@@ -28,4 +28,8 @@ export class UserInMemoryRepository implements IUserRepository {
 		const user = this.users.find((user) => user.email === email)
 		return user ? mapperToDomain(user) : null
 	}
+	async findById(id: string): Promise<UserEntity> {
+		const user = this.users.find((user) => user.id === id)
+		return user ? mapperToDomain(user) : null
+	}
 }
