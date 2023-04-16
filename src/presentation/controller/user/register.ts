@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 import { handleControllerError } from "~/helpers/errors"
-import { makeCreateUserService } from "~/useCases/user/factory/makeUserUseCase"
+import { makeCreateUserService } from "~/useCases/user/factory/makeUserService"
 
 export const handleRegister = async (request: FastifyRequest, reply: FastifyReply) => {
 	try {

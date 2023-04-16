@@ -2,7 +2,7 @@ import { UserEntity } from "~/domain/entity/userEntity"
 import { IUserRepository, type CreateUserInput } from "../user/interface"
 import { mapperToDomain } from "../user/mapper"
 import { User } from "@prisma/client"
-import { randomUUID } from "crypto"
+import { randomUUID } from "node:crypto"
 
 export class UserInMemoryRepository implements IUserRepository {
 	private users: User[]
