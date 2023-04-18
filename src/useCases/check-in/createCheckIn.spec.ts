@@ -1,23 +1,74 @@
-import { describe, it } from "node:test"
-import { beforeAll, expect } from "vitest"
+import { afterEach, beforeEach, describe, it, expect, vi } from "vitest"
 import { ICheckInRepository } from "~/infra/repository/check-in/interface"
 import { CheckInRepositoryInMemory } from "~/infra/repository/in-memory/checkInRepositoryInMemory"
 import { CreateCheckInService } from "./createCheckIn"
+import { IGymRepository } from "~/infra/repository/gym/interface"
+import { GymInMemoryRepository } from "~/infra/repository/in-memory/gymInMemoryRepository"
+import { faker } from "@faker-js/faker"
 
-describe("", () => {
-	let repository: ICheckInRepository
+describe("Create check-in Service", () => {
+	let checkInRepository: ICheckInRepository
+	let gymRepository: IGymRepository
 	let sut: CreateCheckInService
-	beforeAll(() => {
-		repository = new CheckInRepositoryInMemory()
-		sut = new CreateCheckInService(repository)
+
+	beforeEach(() => {
+		checkInRepository = new CheckInRepositoryInMemory()
+		gymRepository = new GymInMemoryRepository()
+		sut = new CreateCheckInService(checkInRepository, gymRepository)
+		vi.useFakeTimers()
+		gymRepository.create({
+			id: "gym-id",
+			latitude: 0,
+			longitude: 0,
+			title: faker.lorem.slug(),
+			description: faker.lorem.paragraph(),
+			phone: faker.phone.number(),
+		})
+	})
+
+	afterEach(() => {
+		vi.useRealTimers()
 	})
 
 	it("Should create an check-in", async () => {
+		vi.setSystemTime(new Date(2023, 0, 20, 8, 0, 0))
 		const response = await sut.execute({
 			gymId: "gym-id",
 			userId: "user-id",
+			userLatitude: 0,
+			userLongitude: 0,
 		})
 
-		expect(response?.checkIn).toHaveProperty("id")
+		expect(response?.checkIn.id).toEqual(expect.any(String))
+	})
+
+	it("Should not be able to check-in twice on the same day", async () => {
+		vi.setSystemTime(new Date(2023, 1, 1, 13))
+		const input = {
+			gymId: "gym-id",
+			userId: "user-id",
+			userLatitude: 0,
+			userLongitude: 0,
+		}
+
+		await sut.execute(input)
+		vi.setSystemTime(new Date(2023, 1, 1, 13))
+		await expect(() => sut.execute(input)).rejects.toThrowError(/Not allowed/)
+	})
+	it("Should be able to check-in twice on different days", async () => {
+		vi.setSystemTime(new Date(2023, 1, 1, 13))
+		const input = {
+			gymId: "gym-id",
+			userId: "user-id",
+			userLatitude: 0,
+			userLongitude: 0,
+		}
+
+		await sut.execute(input)
+		vi.setSystemTime(new Date(2023, 1, 2, 13))
+
+		const { checkIn } = await sut.execute(input)
+
+		expect(checkIn.id).toEqual(expect.any(String))
 	})
 })
