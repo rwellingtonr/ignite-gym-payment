@@ -3,7 +3,7 @@
 ## Regra de Negócio (RNs)
 
 - [x] O usuário não deve poder se cadastrar com o e-mail duplicado;
-- [ ] O usuário não pode fazer dois check-ins no mesmo dia;
+- [x] O usuário não pode fazer dois check-ins no mesmo dia;
 - [ ] O usuário não pode fazer check-in se não estiver a 100m da academia;
 - [ ] O check-in só pode ser validado 20 min após criado;
 - [ ] O check-in só pode ser validado por administradores;
@@ -18,8 +18,8 @@
 - [ ] Deve ser possível: o usuário obter seu histórico de check-ins;
 - [ ] Deve ser possível: o usuário buscar academias próximas;
 - [ ] Deve ser possível: o usuário buscar academias pelo nome;
-- [ ] Deve ser possível: o usuário realizar check-in em uma academia;
-- [ ] Deve ser possível: validar o check-in de um usuário;
+- [x] Deve ser possível: o usuário realizar check-in em uma academia;
+- [x] Deve ser possível: validar o check-in de um usuário;
 - [ ] Deve ser possível: cadastrar uma academia.
 
 ## Requisito Não Funcional (RNFs)
