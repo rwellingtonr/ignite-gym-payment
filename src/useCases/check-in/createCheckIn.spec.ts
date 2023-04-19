@@ -71,4 +71,25 @@ describe("Create check-in Service", () => {
 
 		expect(checkIn.id).toEqual(expect.any(String))
 	})
+	it("Should not be able to check-in when is far away from the gym", async () => {
+		vi.setSystemTime(new Date(2023, 1, 1, 13))
+
+		gymRepository.create({
+			id: "gym-id-2",
+			latitude: -23.050076,
+			longitude: -46.875178,
+			title: faker.lorem.slug(),
+			description: faker.lorem.paragraph(),
+			phone: faker.phone.number(),
+		})
+
+		const input = {
+			gymId: "gym-id-2",
+			userId: "user-id",
+			userLatitude: -46.997467,
+			userLongitude: -23.068905,
+		}
+
+		await expect(() => sut.execute(input)).rejects.toThrow()
+	})
 })

@@ -35,4 +35,12 @@ export class CheckInRepositoryInMemory implements ICheckInRepository {
 
 		return checkIn ?? null
 	}
+
+	async findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
+		return this.checkIn.filter((check) => check.userId === userId).slice((page - 1) * 20, page * 20)
+	}
+
+	async countByUserId(userId: string): Promise<number> {
+		return this.checkIn.filter((check) => check.userId === userId)?.length
+	}
 }
