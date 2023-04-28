@@ -1,6 +1,5 @@
 import { Gym } from "@prisma/client"
-import { makeError } from "~/helpers/errors"
-import { IGymRepository, type GymInputData } from "~/infra/repository/gym/interface"
+import { IGymRepository } from "~/infra/repository/gym/interface"
 
 interface CreateGymRequest {
 	title: string
