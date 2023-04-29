@@ -1,15 +1,15 @@
-import fastify from "fastify"
+import "~/infra/middleware/gracefulShutdown"
+import fastify, { FastifyReply, FastifyRequest } from "fastify"
 import { apiRoutes } from "./presentation/routes"
 import { handleError } from "./helpers/errors/errorHandler"
+import { environment } from "./config/env"
 import cors from "@fastify/cors"
 import fastifyJwt from "@fastify/jwt"
 import helmet from "@fastify/helmet"
 
-import "~/infra/middleware/gracefulShutdown"
-import { environment } from "./config/env"
-
-export const app = fastify({
-	logger: {
+const loggerType = {
+	production: true,
+	development: {
 		transport: {
 			target: "pino-pretty",
 			options: {
@@ -18,12 +18,12 @@ export const app = fastify({
 			},
 		},
 		serializers: {
-			res(reply) {
+			res(reply: FastifyReply) {
 				return {
 					statusCode: reply.statusCode,
 				}
 			},
-			req(req) {
+			req(req: FastifyRequest) {
 				return {
 					method: req.method,
 					url: req.url,
@@ -31,6 +31,10 @@ export const app = fastify({
 			},
 		},
 	},
+}
+
+export const app = fastify({
+	logger: loggerType[environment.nodeEnv],
 })
 
 app.register(helmet)
