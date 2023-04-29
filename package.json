@@ -1,7 +1,7 @@
 {
 	"name": "payment-gym",
 	"version": "1.0.0",
-	"description": "## Regra de Negócio (RNs)",
+	"description": "Aplicativo de academia",
 	"main": "index.js",
 	"scripts": {
 		"test": "vitest run",
