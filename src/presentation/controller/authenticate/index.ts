@@ -12,9 +12,19 @@ export const handleAuthenticate = async (request: FastifyRequest, reply: Fastify
 		const { email, password } = await userSchema.parseAsync(request.body)
 
 		const service = makeAuthenticateService()
-		const result = await service.execute({ email, password })
+		const { user } = await service.execute({ email, password })
 
-		return reply.status(200).send(result)
+		const token = await reply.jwtSign(
+			{},
+			{
+				sign: {
+					sub: user.id,
+					expiresIn: "1d",
+				},
+			},
+		)
+
+		return reply.status(200).send({ user, token })
 	} catch (error) {
 		return handleControllerError(error, reply)
 	}

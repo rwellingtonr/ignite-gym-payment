@@ -2,9 +2,11 @@ import fastify from "fastify"
 import { apiRoutes } from "./presentation/routes"
 import { handleError } from "./helpers/errors/errorHandler"
 import cors from "@fastify/cors"
+import fastifyJwt from "@fastify/jwt"
 import helmet from "@fastify/helmet"
 
 import "~/infra/middleware/gracefulShutdown"
+import { environment } from "./config/env"
 
 export const app = fastify({
 	logger: {
@@ -33,6 +35,8 @@ export const app = fastify({
 
 app.register(helmet)
 app.register(cors)
+app.register(fastifyJwt, { secret: environment.jwtSecret })
+
 app.register(apiRoutes, { prefix: "/api" })
 
 app.setErrorHandler(handleError)
