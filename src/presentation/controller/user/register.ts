@@ -1,9 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 import { handleControllerError } from "~/helpers/errors"
 import { makeCreateUserService } from "~/useCases/user/factory/makeUserService"
+import { IBaseController } from "../interface"
+import { domainToPresentation } from "./mapper"
 
-export const handleRegister = async (request: FastifyRequest, reply: FastifyReply) => {
+export const handleRegister: IBaseController = async (request, reply) => {
 	try {
 		const userSchema = z.object({
 			name: z.string(),
@@ -15,8 +16,9 @@ export const handleRegister = async (request: FastifyRequest, reply: FastifyRepl
 		const service = makeCreateUserService()
 
 		const result = await service.execute({ email, name, password })
+		const { user } = domainToPresentation(result.user)
 
-		return reply.status(201).send(result)
+		return reply.status(201).send({ user })
 	} catch (error) {
 		return handleControllerError(error, reply)
 	}
