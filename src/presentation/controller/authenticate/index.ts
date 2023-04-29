@@ -1,9 +1,9 @@
-import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 import { handleControllerError } from "~/helpers/errors"
 import { makeAuthenticateService } from "~/useCases/authenticate/factory/makeAuthenticateService"
+import { IBaseController } from "../interface"
 
-export const handleAuthenticate = async (request: FastifyRequest, reply: FastifyReply) => {
+export const handleAuthenticate: IBaseController = async (request, reply) => {
 	try {
 		const userSchema = z.object({
 			password: z.string().min(8),
