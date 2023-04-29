@@ -1,5 +1,6 @@
-import { FastifyInstance } from "fastify"
 import * as controllers from "../controller"
+import { FastifyInstance } from "fastify"
+import { verifyJwt } from "../middlaware/verifyJwt"
 
 export const apiRoutes = async (app: FastifyInstance) => {
 	app.post("/users", controllers.handleRegister)
@@ -7,5 +8,5 @@ export const apiRoutes = async (app: FastifyInstance) => {
 
 	// Authenticated
 
-	app.get("/me", controllers.handleProfile)
+	app.get("/me", { onRequest: [verifyJwt] }, controllers.handleProfile)
 }

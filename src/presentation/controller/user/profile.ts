@@ -5,8 +5,6 @@ import { domainToPresentation } from "./mapper"
 
 export const handleProfile: IBaseController = async (request, reply) => {
 	try {
-		await request.jwtVerify()
-
 		const userId = request.user.sub
 
 		const service = makeGetUserProfileService()
