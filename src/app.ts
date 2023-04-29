@@ -33,6 +33,6 @@ export const app = fastify({
 
 app.register(helmet)
 app.register(cors)
-app.register(apiRoutes)
+app.register(apiRoutes, { prefix: "/api" })
 
 app.setErrorHandler(handleError)

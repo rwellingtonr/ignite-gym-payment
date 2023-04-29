@@ -1,8 +1,11 @@
 import { FastifyInstance } from "fastify"
-import { handleRegister } from "../controller/user/register"
-import { handleAuthenticate } from "../controller/authenticate"
+import * as controllers from "../controller"
 
 export const apiRoutes = async (app: FastifyInstance) => {
-	app.post("/users", handleRegister)
-	app.post("/sessions", handleAuthenticate)
+	app.post("/users", controllers.handleRegister)
+	app.post("/sessions", controllers.handleAuthenticate)
+
+	// Authenticated
+
+	app.get("/me", controllers.handleProfile)
 }
