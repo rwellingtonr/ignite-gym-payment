@@ -27,7 +27,7 @@
 - [x] A senha do usuário precisa estar criptografada;
 - [x] Os dados precisam estar persistidos em um banco PostgreSQL;
 - [x] Todas listas de dados precisam estar paginadas com 20 itens por página;
-- [ ] O usuário deve ser identificado por um JWT.
+- [x] O usuário deve ser identificado por um JWT.
 
 ## ERD
 
