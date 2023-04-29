@@ -1,8 +1,7 @@
 import { CheckIn } from "@prisma/client"
-import dayjs from "dayjs"
 import { makeError } from "~/helpers/errors"
 import { ICheckInRepository } from "~/infra/repository/check-in/interface"
-import { IGymRepository } from "~/infra/repository/gym/interface"
+import { getDiffTimeInMinutes } from "~/utils/date"
 
 interface ValidateCheckInRequest {
 	checkInId: string
@@ -23,10 +22,7 @@ export class ValidateCheckInService {
 			throw new Error404()
 		}
 
-		const distanceInMinutesFromCheckInCreation = dayjs(new Date()).diff(
-			checkIn.createdAt,
-			"minutes",
-		)
+		const distanceInMinutesFromCheckInCreation = getDiffTimeInMinutes(checkIn.createdAt)
 
 		if (distanceInMinutesFromCheckInCreation > 20) {
 			const Error403 = makeError("403", "Check-in can only be validated within 20 minutes")

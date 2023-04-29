@@ -9,7 +9,7 @@
 		"test:coverage": "vitest run --coverage",
 		"test:ui": "vitest --ui",
 		"dev": "tsx watch src/server.ts",
-		"build": "tsup src --out-dir dist",
+		"build": "tsup",
 		"start": "node --watch dist/server.js"
 	},
 	"keywords": [],
