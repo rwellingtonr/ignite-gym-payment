@@ -9,7 +9,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres-alpine
+        image: postgres
         env:
           POSTGRESQL_USERNAME: postgres
           POSTGRESQL_PASSWORD: SomeHashedPassword
