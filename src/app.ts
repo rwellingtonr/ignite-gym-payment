@@ -1,6 +1,6 @@
 import "~/infra/middleware/gracefulShutdown"
 import fastify, { FastifyReply, FastifyRequest } from "fastify"
-import { apiRoutes } from "./presentation/routes"
+import * as Routes from "./presentation/routes"
 import { handleError } from "./helpers/errors/errorHandler"
 import { environment } from "./config/env"
 import cors from "@fastify/cors"
@@ -41,6 +41,8 @@ app.register(helmet)
 app.register(cors)
 app.register(fastifyJwt, { secret: environment.jwtSecret })
 
-app.register(apiRoutes, { prefix: "/api" })
+for (const key in Routes) {
+	app.register(Routes[key], { prefix: "/api" })
+}
 
 app.setErrorHandler(handleError)
