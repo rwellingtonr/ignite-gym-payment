@@ -20,7 +20,7 @@ jobs:
           node-version: 18
           cache: "npm"
       - run: npm ci
-      - run: npm test:e2e
+      - run: npm run test:e2e
         env:
           JWT_SECRET: secrete
           NODE_END: development
