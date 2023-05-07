@@ -15,6 +15,7 @@
 		"pretest:e2e": "run-s test:create/vitest-environment-prisma test:install/vitest-environment-prisma",
 		"dev": "tsx watch src/server.ts",
 		"build": "tsup",
+		"postbuild": "npx prisma migrate deploy",
 		"start": "node --watch dist/server.js"
 	},
 	"keywords": [],
