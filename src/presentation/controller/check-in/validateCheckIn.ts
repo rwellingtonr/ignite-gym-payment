@@ -8,7 +8,7 @@ export const handleValidateCheckIn: IBaseController = async (request, reply) => 
 		const paramsSchema = z.object({
 			checkInId: z.string().cuid(),
 		})
-		const { checkInId } = await paramsSchema.parseAsync(request.body)
+		const { checkInId } = await paramsSchema.parseAsync(request.params)
 
 		const service = makeValidateCheckInService()
 
