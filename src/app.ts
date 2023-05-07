@@ -6,6 +6,7 @@ import { environment } from "./config/env"
 import cors from "@fastify/cors"
 import fastifyJwt from "@fastify/jwt"
 import helmet from "@fastify/helmet"
+import cookie from "@fastify/cookie"
 
 const loggerType = {
 	production: true,
@@ -39,7 +40,17 @@ export const app = fastify({
 
 app.register(helmet)
 app.register(cors)
-app.register(fastifyJwt, { secret: environment.jwtSecret })
+app.register(cookie)
+app.register(fastifyJwt, {
+	secret: environment.jwtSecret,
+	cookie: {
+		cookieName: "refreshToken",
+		signed: false,
+	},
+	sign: {
+		expiresIn: "10m",
+	},
+})
 
 for (const key in Routes) {
 	app.register(Routes[key], { prefix: "/api" })
