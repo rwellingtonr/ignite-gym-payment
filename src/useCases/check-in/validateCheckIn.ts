@@ -23,10 +23,9 @@ export class ValidateCheckInService {
 		}
 
 		const distanceInMinutesFromCheckInCreation = getDiffTimeInMinutes(checkIn.createdAt)
-
 		if (distanceInMinutesFromCheckInCreation > 20) {
 			const Error403 = makeError("403", "Check-in can only be validated within 20 minutes")
-			throw Error403
+			throw new Error403()
 		}
 
 		checkIn.validatedAt = new Date()
