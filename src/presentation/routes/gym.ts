@@ -6,6 +6,6 @@ export const gymsRoutes = async (app: FastifyInstance) => {
 	app.addHook("onRequest", verifyJwt)
 
 	app.post("/gym", controller.handleCreateGym)
-	app.get("/gym/nearby", controller.handleGetGym)
+	app.get("/gym/nearby", controller.handleGetNearbyGym)
 	app.get("/gym/search", controller.handleGetGym)
 }
