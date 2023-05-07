@@ -1,17 +1,17 @@
 import { z } from "zod"
 import { IBaseController } from "../interface"
-import { makeSearchGymService } from "~/useCases/gym/factory/makeSearchGymService"
+import { makeNearbyGymService } from "~/useCases/gym/factory/makeGetNearbyGymService"
 
 export const handleGetNearbyGym: IBaseController = async (request, reply) => {
 	const gymSchema = z.object({
-		q: z.string(),
-		page: z.coerce.number().min(1).default(1),
+		latitude: z.coerce.number().refine((value) => Math.abs(value) <= 90),
+		longitude: z.coerce.number().refine((value) => Math.abs(value) <= 180),
 	})
-	const { q, page } = await gymSchema.parseAsync(request.query)
+	const { latitude, longitude } = await gymSchema.parseAsync(request.query)
 
-	const service = makeSearchGymService()
+	const service = makeNearbyGymService()
 
-	const result = await service.execute({ query: q, page })
+	const result = await service.execute({ userLatitude: latitude, userLongitude: longitude })
 
 	return reply.status(200).send(result)
 }
