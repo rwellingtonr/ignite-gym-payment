@@ -10,5 +10,6 @@ export function mapperToDomain(user: UserRepositoryData): UserEntity {
 		name: user.name,
 		password: user.passwordHash,
 		createdAt: user.createdAt,
+		role: user.role,
 	}
 }

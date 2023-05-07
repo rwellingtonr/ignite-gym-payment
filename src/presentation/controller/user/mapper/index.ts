@@ -11,6 +11,7 @@ export const domainToPresentation = (user: UserEntity) => {
 			email: user.email,
 			name: user.name,
 			createdAt: user.createdAt,
+			role: user.role,
 		},
 	}
 	return response

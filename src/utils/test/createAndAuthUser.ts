@@ -2,11 +2,12 @@ import { faker } from "@faker-js/faker"
 import request from "supertest"
 import { app } from "~/app"
 
-export const createAndAuthUser = async () => {
+export const createAndAuthUser = async (isAdmin = true) => {
 	const userProps = {
 		email: faker.internet.email(),
 		name: faker.name.fullName(),
 		password: faker.lorem.slug(10),
+		role: isAdmin ? "ADMIN" : "MEMBER",
 	}
 	await request(app.server).post("/api/users").send(userProps)
 

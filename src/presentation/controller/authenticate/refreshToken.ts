@@ -3,16 +3,18 @@ import { IBaseController } from "../interface"
 export const handleRefreshToken: IBaseController = async (request, reply) => {
 	await request.jwtVerify({ onlyCookie: true })
 
+	const { sub, role } = request.user
+
 	const token = await reply.jwtSign(
-		{},
+		{ role },
 		{
 			sign: {
-				sub: request.user.sub,
+				sub: sub,
 			},
 		},
 	)
 	const refreshToken = await reply.jwtSign(
-		{},
+		{ role },
 		{
 			sign: {
 				sub: request.user.sub,
