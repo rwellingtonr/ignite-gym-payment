@@ -31,7 +31,6 @@ jobs:
           postgresql db: ignite
           postgresql user: postgres
           postgresql password: SomeHashedPassword
-
       - run: |
           echo "Starting test..."
           echo "This is a node_env secret value: $NODE_ENV"
