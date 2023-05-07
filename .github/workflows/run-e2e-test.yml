@@ -7,22 +7,13 @@ jobs:
     name: "Run E2E Test"
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRESQL_USERNAME: postgres
-          POSTGRESQL_PASSWORD: SomeHashedPassword
-          POSTGRESQL_DATABASE: ignite
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
+      - name: Setup PostgreSQL
+        uses: Harmon758/postgresql-action@v1.0.0
+        with:
+          postgresql db: ignite
+          postgresql user: postgres
+          postgresql password: SomeHashedPassword
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
