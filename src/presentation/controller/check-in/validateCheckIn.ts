@@ -6,7 +6,7 @@ import { handleControllerError } from "~/helpers/errors"
 export const handleValidateCheckIn: IBaseController = async (request, reply) => {
 	try {
 		const paramsSchema = z.object({
-			checkInId: z.string().uuid(),
+			checkInId: z.string().cuid(),
 		})
 		const { checkInId } = await paramsSchema.parseAsync(request.body)
 

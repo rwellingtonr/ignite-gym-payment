@@ -6,7 +6,7 @@ import { handleControllerError } from "~/helpers/errors"
 export const handleCreateCheckIn: IBaseController = async (request, reply) => {
 	try {
 		const paramsSchema = z.object({
-			gymId: z.string().uuid(),
+			gymId: z.string().cuid(),
 		})
 
 		const bodySchema = z.object({
@@ -30,7 +30,7 @@ export const handleCreateCheckIn: IBaseController = async (request, reply) => {
 
 		const result = await service.execute(serviceDto)
 
-		return reply.status(200).send(result)
+		return reply.status(201).send(result)
 	} catch (error) {
 		return handleControllerError(error, reply)
 	}
