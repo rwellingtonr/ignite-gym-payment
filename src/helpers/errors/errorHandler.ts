@@ -1,5 +1,6 @@
 import { FastifyError, FastifyReply, FastifyRequest } from "fastify"
 import { ZodError } from "zod"
+import { app } from "~/app"
 import { environment } from "~/config/env"
 
 export function handleError(err: FastifyError, _request: FastifyRequest, reply: FastifyReply) {
@@ -18,7 +19,7 @@ export function handleError(err: FastifyError, _request: FastifyRequest, reply: 
 	}
 
 	if (environment.nodeEnv !== "production") {
-		console.error(err)
+		app.log.error(err)
 	}
 
 	return reply.status(500).send({
