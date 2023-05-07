@@ -7,6 +7,8 @@ export const userRoutes = async (app: FastifyInstance) => {
 	app.post("/users", userController.handleRegister)
 	app.post("/sessions", authenticateController.handleAuthenticate)
 
+	app.patch("/token/refresh", authenticateController.handleRefreshToken)
+
 	// Authenticated
 
 	app.get("/me", { onRequest: [verifyJwt] }, userController.handleProfile)
