@@ -12,11 +12,13 @@ async function deleteDataBaseSchema(schema: string) {
 }
 
 function generateDBUrl(nameSchema: string) {
-	if (process.env.DATABASE_URL) {
+	const databaseUrl = process.env.DATABASE_URL
+
+	if (!databaseUrl) {
 		throw new Error("Please provide de database url!")
 	}
 
-	const url = new URL(process.env.DATABASE_URL as string)
+	const url = new URL(databaseUrl)
 	url.searchParams.set("schema", nameSchema)
 
 	return url.toString()
