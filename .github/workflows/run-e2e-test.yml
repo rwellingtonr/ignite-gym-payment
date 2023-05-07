@@ -14,12 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup PostgreSQL
-        uses: Harmon758/postgresql-action@v1.0.0
-        with:
-          postgresql db: ignite
-          postgresql user: postgres
-          postgresql password: SomeHashedPassword
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         env:
@@ -30,6 +24,14 @@ jobs:
         with:
           node-version: 18
           cache: "npm"
+
+      - name: Setup PostgreSQL
+        uses: Harmon758/postgresql-action@v1.0.0
+        with:
+          postgresql db: ignite
+          postgresql user: postgres
+          postgresql password: SomeHashedPassword
+
       - run: |
           echo "Starting test..."
           echo "This is a node_env secret value: $NODE_ENV"
